@@ -4,6 +4,9 @@ import { productCategories } from "@/lib/site-data"
 export function RfqForm() {
   return (
     <form className="grid gap-4 rounded-md border border-graphite/10 bg-white p-6 shadow-soft" action="/api/inquiries" method="post">
+      <p className="rounded-md bg-mist px-4 py-3 text-sm leading-6 text-steel">
+        Share your drawing, material, quantity, and application notes. The MAXTECH team will review the machining route and respond through the contact details you provide.
+      </p>
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Name" name="name" required />
         <Field label="Email" name="email" type="email" required />
