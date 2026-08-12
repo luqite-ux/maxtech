@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation"
 import { RfqCta } from "@/components/rfq-cta"
 import { SectionShell } from "@/components/section-shell"
-import { productCategories } from "@/lib/site-data"
+import { getProductCategory, getProductsForCategory } from "@/lib/products-db"
 
-export function CategoryDetail({ slug }: { slug: string }) {
-  const category = productCategories.find((item) => item.slug === slug)
+export async function CategoryDetail({ slug }: { slug: string }) {
+  const category = await getProductCategory(slug)
   if (!category) notFound()
+  const products = await getProductsForCategory(slug)
 
   return (
     <>
@@ -29,6 +30,24 @@ export function CategoryDetail({ slug }: { slug: string }) {
           <DetailBlock title="Common materials" items={category.materials} />
         </div>
       </SectionShell>
+
+      {products.length > 0 && (
+        <SectionShell className="bg-gradient-to-br from-white via-mist to-white" eyebrow="Database products" title="Active product records from the MAXTECH catalog.">
+          <div className="grid gap-4 md:grid-cols-2">
+            {products.map((product) => (
+              <article key={product.slug} className="rounded-md border border-graphite/10 bg-white p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-graphite">{product.name}</h2>
+                <p className="mt-3 text-sm leading-7 text-steel">{product.description}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {product.features.slice(0, 3).map((feature) => (
+                    <span key={feature} className="rounded-full bg-mist px-3 py-1 text-xs font-medium text-steel">{feature}</span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </SectionShell>
+      )}
 
       <SectionShell className="bg-white" eyebrow="RFQ guidance" title="What to include when you contact us.">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

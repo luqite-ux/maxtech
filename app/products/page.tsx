@@ -2,14 +2,17 @@ import type { Metadata } from "next"
 import { ProductCategoryCard } from "@/components/products/product-category-card"
 import { RfqCta } from "@/components/rfq-cta"
 import { SectionShell } from "@/components/section-shell"
-import { productCategories } from "@/lib/site-data"
+import { getProductCategories } from "@/lib/products-db"
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: "Products",
   description: "Explore MAXTECH custom CNC machined parts for robot equipment, carbon fiber equipment, steel structures, molds, automotive, and motorcycle applications."
 }
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const categories = await getProductCategories()
   return (
     <>
       <section className="bg-gradient-to-br from-white via-mist to-[#fff7f7] px-4 py-20 sm:px-6 lg:px-8">
@@ -26,7 +29,7 @@ export default function ProductsPage() {
       </section>
       <SectionShell>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {productCategories.map((category) => (
+          {categories.map((category) => (
             <ProductCategoryCard key={category.slug} category={category} />
           ))}
         </div>

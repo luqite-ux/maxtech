@@ -20,6 +20,7 @@ export const navItems = [
   { label: "Products", href: "/products" },
   { label: "Capabilities", href: "/capabilities" },
   { label: "Quality", href: "/quality" },
+  { label: "News", href: "/news" },
   { label: "About", href: "/about" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" }
@@ -142,3 +143,5 @@ export const faqs = [
       "If a manufacturing issue is confirmed, MAXTECH reviews the cause and discusses practical corrective actions such as adjustment, rework, or replacement based on the agreed specifications."
   }
 ]
+
+export type ProductCategory = (typeof productCategories)[number]
