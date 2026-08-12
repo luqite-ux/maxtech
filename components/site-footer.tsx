@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Mail, MapPin, Phone } from "lucide-react"
+import { MapPin, Phone } from "lucide-react"
 import { navItems, productCategories, siteInfo } from "@/lib/site-data"
 import { productPath } from "@/lib/routes"
 import { RfqCta } from "@/components/rfq-cta"
@@ -14,7 +14,6 @@ export function SiteFooter() {
           <p className="mt-5 max-w-md text-sm leading-7 text-steel">{siteInfo.tagline.en}</p>
           <div className="mt-6 grid gap-3 text-sm text-steel">
             <p className="flex gap-3"><Phone className="mt-0.5 h-4 w-4 text-burgundy" /> {siteInfo.phone}</p>
-            <p className="flex gap-3"><Mail className="mt-0.5 h-4 w-4 text-burgundy" /> Temporary admin email: info@maxtech-murex.vercel.app</p>
             <p className="flex gap-3"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-burgundy" /> {siteInfo.address}</p>
           </div>
         </div>

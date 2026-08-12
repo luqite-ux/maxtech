@@ -9,7 +9,9 @@ export const metadata: Metadata = {
   description: "Contact MAXTECH and send an RFQ for custom CNC machining and precision mechanical parts."
 }
 
-export default function ContactPage() {
+export default async function ContactPage({ searchParams }: { searchParams?: Promise<{ status?: string }> }) {
+  const params = await searchParams
+
   return (
     <>
       <section className="bg-gradient-to-br from-white via-mist to-[#fff7f7] px-4 py-20 sm:px-6 lg:px-8">
@@ -27,7 +29,7 @@ export default function ContactPage() {
             <Info icon={<MapPin className="h-5 w-5" />} title="Factory address" text={siteInfo.address} />
           </div>
           <div id="rfq">
-            <RfqForm />
+            <RfqForm status={params?.status} />
           </div>
         </div>
       </SectionShell>
