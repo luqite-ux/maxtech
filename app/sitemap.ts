@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next"
 import { getPublishedArticles } from "@/lib/articles-db"
 import { productCategories } from "@/lib/site-data"
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://maxtech-murex.vercel.app"
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://hl-precision.com"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = ["", "/products", "/capabilities", "/quality", "/news", "/about", "/faq", "/contact"]
