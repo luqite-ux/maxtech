@@ -1,6 +1,27 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { createPublicSupabaseClient, getTenantId } from "@/lib/supabase"
 
+async function notifyInquiryEmail(tenantId: string, inquiryId: string) {
+  const secret = process.env.INQUIRY_NOTIFY_SECRET?.trim()
+  const adminUrl = (process.env.HUANQIU_ADMIN_URL ?? process.env.NEXT_PUBLIC_ADMIN_URL)?.trim().replace(/\/$/, '')
+  if (!secret || !adminUrl) return
+
+  try {
+    const response = await fetch(`${adminUrl}/api/inquiries/notify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-inquiry-notify-secret': secret,
+      },
+      body: JSON.stringify({ tenantId, inquiryId }),
+    })
+    if (!response.ok) {
+      console.warn('[inquiries] notification request failed', response.status)
+    }
+  } catch (error) {
+    console.warn('[inquiries] notification request error', error)
+  }
+}
 export async function POST(request: NextRequest) {
   const formData = await request.formData()
   const required = ["name", "email", "country", "message"]
@@ -28,7 +49,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const supabase = createPublicSupabaseClient()
-    const { error } = await supabase.from("inquiries").insert({
+    const { data, error } = await supabase.from("inquiries").insert({
       tenant_id: getTenantId(),
       name,
       company,
@@ -44,9 +65,10 @@ export async function POST(request: NextRequest) {
         `Drawing or File Notes: ${drawingNote}`
       ].join("\n"),
       status: "unread"
-    })
+    }).select("id").single()
 
     if (error) throw error
+    if (data?.id) await notifyInquiryEmail(getTenantId(), data.id)
   } catch {
     redirectUrl.searchParams.set("status", "error")
     return NextResponse.redirect(redirectUrl, 303)
