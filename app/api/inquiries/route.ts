@@ -49,7 +49,9 @@ export async function POST(request: NextRequest) {
 
   try {
     const supabase = createPublicSupabaseClient()
-    const { data, error } = await supabase.from("inquiries").insert({
+    const inquiryId = crypto.randomUUID()
+    const { error } = await supabase.from("inquiries").insert({
+      id: inquiryId,
       tenant_id: getTenantId(),
       name,
       company,
@@ -65,10 +67,10 @@ export async function POST(request: NextRequest) {
         `Drawing or File Notes: ${drawingNote}`
       ].join("\n"),
       status: "unread"
-    }).select("id").single()
+    })
 
     if (error) throw error
-    if (data?.id) await notifyInquiryEmail(getTenantId(), data.id)
+    await notifyInquiryEmail(getTenantId(), inquiryId)
   } catch {
     redirectUrl.searchParams.set("status", "error")
     return NextResponse.redirect(redirectUrl, 303)
