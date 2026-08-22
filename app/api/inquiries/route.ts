@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { createPublicSupabaseClient, getTenantId } from "@/lib/supabase"
+import { createSupabaseCaptchaContextFromEnv, verifyCaptchaSubmission } from "@/lib/inquiry-captcha"
 
 async function notifyInquiryEmail(tenantId: string, inquiryId: string) {
   const secret = process.env.INQUIRY_NOTIFY_SECRET?.trim()
@@ -27,13 +28,8 @@ export async function POST(request: NextRequest) {
   const required = ["name", "email", "country", "message"]
   const missing = required.filter((field) => !String(formData.get(field) || "").trim())
 
-  const redirectUrl = new URL("/contact", request.url)
-  redirectUrl.hash = "rfq"
-
   if (missing.length) {
-    redirectUrl.searchParams.set("status", "missing")
-    redirectUrl.searchParams.set("fields", missing.join(","))
-    return NextResponse.redirect(redirectUrl, 303)
+    return NextResponse.json({ error: "Please complete the required fields before submitting your RFQ.", fields: missing }, { status: 400 })
   }
 
   const name = String(formData.get("name") || "").trim()
@@ -46,6 +42,25 @@ export async function POST(request: NextRequest) {
   const country = String(formData.get("country") || "").trim()
   const drawingNote = String(formData.get("drawingNote") || "").trim()
   const message = String(formData.get("message") || "").trim()
+
+  let captcha
+  try {
+    const { store, tenantId: captchaTenantId, siteScope } = createSupabaseCaptchaContextFromEnv()
+    captcha = await verifyCaptchaSubmission({
+      secret: process.env.CAPTCHA_SECRET ?? "",
+      store,
+      tenantId: captchaTenantId,
+      siteScope,
+      scope: String(formData.get("captchaScope") || ""),
+      token: String(formData.get("captchaToken") || ""),
+      answer: String(formData.get("captchaAnswer") || ""),
+    })
+  } catch {
+    return NextResponse.json({ error: "The verification service is temporarily unavailable." }, { status: 503 })
+  }
+  if (!captcha.ok) {
+    return NextResponse.json({ error: "The verification code is invalid or expired. Please try the new image." }, { status: 400 })
+  }
 
   try {
     const supabase = createPublicSupabaseClient()
@@ -72,10 +87,8 @@ export async function POST(request: NextRequest) {
     if (error) throw error
     await notifyInquiryEmail(getTenantId(), inquiryId)
   } catch {
-    redirectUrl.searchParams.set("status", "error")
-    return NextResponse.redirect(redirectUrl, 303)
+    return NextResponse.json({ error: "The RFQ could not be submitted. Please check the form and try again." }, { status: 500 })
   }
 
-  redirectUrl.searchParams.set("status", "submitted")
-  return NextResponse.redirect(redirectUrl, 303)
+  return NextResponse.json({ ok: true }, { status: 201 })
 }
