@@ -153,7 +153,7 @@ function decimal(value: number) {
 
 function renderSvg(answer: string, nonce: string) {
   const seed = Buffer.from(nonce, 'base64url')
-  const glyphs = [...answer]
+  const glyphs = answer.split('')
     .map((character, index) => {
       const pixels = GLYPH_PIXELS[character]
       const originX = 13 + index * 36
