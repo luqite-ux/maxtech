@@ -15,12 +15,13 @@ export default async function ProductsPage() {
   const categories = await getProductCategories()
   return (
     <>
-      <section className="bg-gradient-to-br from-white via-mist to-[#fff7f7] px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
+      <section className="relative overflow-hidden bg-gradient-to-br from-white via-mist to-[#fff7f7] px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+        <div className="machining-grid absolute inset-0 opacity-40" />
+        <div className="relative mx-auto max-w-7xl">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-burgundy">Products</p>
-          <h1 className="mt-4 max-w-4xl text-5xl font-semibold tracking-tight text-graphite">Custom machined parts made from drawings, samples, and project requirements.</h1>
+          <h1 className="mt-4 max-w-5xl text-4xl font-semibold tracking-tight text-graphite sm:text-6xl">A visual catalogue of custom parts made from drawings, samples, and project requirements.</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-steel">
-            MAXTECH focuses on non-standard mechanical parts and CNC machining services. Select a product category and send your technical requirements for review.
+            Explore 65 customer-supplied manufacturing references across six application groups, then send your technical requirements for a project-specific review.
           </p>
           <div className="mt-8">
             <RfqCta label="Send an RFQ" />

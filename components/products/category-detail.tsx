@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { RfqCta } from "@/components/rfq-cta"
 import { SectionShell } from "@/components/section-shell"
 import { getProductCategory, getProductsForCategory } from "@/lib/products-db"
+import { ProductCard } from "@/components/products/product-card"
 
 export async function CategoryDetail({ slug }: { slug: string }) {
   const category = await getProductCategory(slug)
@@ -32,18 +33,15 @@ export async function CategoryDetail({ slug }: { slug: string }) {
       </SectionShell>
 
       {products.length > 0 && (
-        <SectionShell className="bg-gradient-to-br from-white via-mist to-white" eyebrow="Database products" title="Active product records from the MAXTECH catalog.">
-          <div className="grid gap-4 md:grid-cols-2">
+        <SectionShell
+          className="bg-gradient-to-br from-white via-mist to-white"
+          eyebrow="Customer-supplied product gallery"
+          title={`Explore ${products.length} ${category.name.en.toLowerCase()} references.`}
+          intro="These images show previous manufacturing references. Send your own drawing, sample, material, and quantity for a project-specific review."
+        >
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (
-              <article key={product.slug} className="rounded-md border border-graphite/10 bg-white p-6 shadow-sm">
-                <h2 className="text-xl font-semibold text-graphite">{product.name}</h2>
-                <p className="mt-3 text-sm leading-7 text-steel">{product.description}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {product.features.slice(0, 3).map((feature) => (
-                    <span key={feature} className="rounded-full bg-mist px-3 py-1 text-xs font-medium text-steel">{feature}</span>
-                  ))}
-                </div>
-              </article>
+              <ProductCard key={product.slug} product={product} />
             ))}
           </div>
         </SectionShell>
@@ -52,7 +50,7 @@ export async function CategoryDetail({ slug }: { slug: string }) {
       <SectionShell className="bg-white" eyebrow="RFQ guidance" title="What to include when you contact us.">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {["2D or 3D drawings", "Material and surface requirements", "Target quantity", "Assembly or inspection notes"].map((item) => (
-            <div key={item} className="rounded-md border border-graphite/10 bg-mist p-5 text-sm font-semibold text-graphite">
+            <div key={item} className="rounded-2xl border border-graphite/10 bg-mist p-5 text-sm font-semibold text-graphite">
               {item}
             </div>
           ))}
@@ -64,11 +62,11 @@ export async function CategoryDetail({ slug }: { slug: string }) {
 
 function DetailBlock({ title, items }: { title: string; items: string[] }) {
   return (
-    <div className="rounded-md border border-graphite/10 bg-white p-6 shadow-sm">
+    <div className="rounded-2xl border border-graphite/10 bg-white p-6 shadow-sm">
       <h2 className="text-xl font-semibold text-graphite">{title}</h2>
       <div className="mt-5 grid gap-3">
         {items.map((item) => (
-          <p key={item} className="rounded-md bg-mist px-4 py-3 text-sm font-medium text-steel">
+          <p key={item} className="rounded-xl bg-mist px-4 py-3 text-sm font-medium text-steel">
             {item}
           </p>
         ))}
