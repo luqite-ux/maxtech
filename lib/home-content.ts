@@ -23,6 +23,5 @@ export const industryApplications = [
   { title: "Industrial Machinery", description: "Rollers, sleeves, bases, connecting parts, and structural mechanical components." },
 ] as const
 
-const featureIndexes = [0, 12, 17, 23, 40, 50, 6, 59]
+const featureIndexes = [0, 12, 20, 23, 40, 60, 9, 59]
 export const featuredCatalogProducts = featureIndexes.map((index) => catalogProducts[index])
-

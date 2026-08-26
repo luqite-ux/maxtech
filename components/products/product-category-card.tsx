@@ -3,19 +3,19 @@ import { ArrowUpRight } from "lucide-react"
 import type { productCategories } from "@/lib/site-data"
 import { productPath } from "@/lib/routes"
 import Image from "next/image"
-import { getCatalogProductsByCategory } from "@/lib/product-catalog"
+import { getCategoryFeaturedProduct } from "@/lib/product-catalog"
 
 type Category = (typeof productCategories)[number]
 
 export function ProductCategoryCard({ category }: { category: Category }) {
-  const heroImage = getCatalogProductsByCategory(category.slug)[0]?.image
+  const heroImage = getCategoryFeaturedProduct(category.slug)?.image
   return (
     <Link
       href={productPath(category.slug)}
       className="group flex min-h-[28rem] flex-col overflow-hidden rounded-2xl border border-graphite/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-burgundy/30 hover:shadow-soft"
     >
       <div className="relative aspect-[16/10] bg-[#f4f6f7]">
-        {heroImage && <Image src={heroImage} alt="" fill className="object-contain p-5 transition duration-500 group-hover:scale-[1.04]" />}
+        {heroImage && <Image src={heroImage} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-contain p-5 transition duration-500 group-hover:scale-[1.04]" />}
       </div>
       <div className="flex flex-1 flex-col p-6">
       <div className="flex items-start justify-between gap-4">

@@ -3,7 +3,7 @@ import { existsSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 import test from "node:test"
 
-const { catalogProducts, getCatalogProductsByCategory } = await import("../lib/product-catalog.ts")
+const { catalogProducts, getCatalogProductsByCategory, getCategoryFeaturedProduct } = await import("../lib/product-catalog.ts")
 
 const expectedCategoryCounts = {
   "automotive-parts": 12,
@@ -26,6 +26,14 @@ test("the supplied catalogue exposes every customer image exactly once", () => {
   }
 })
 
+test("each category exposes a curated image for prominent cards", () => {
+  for (const category of Object.keys(expectedCategoryCounts)) {
+    const product = getCategoryFeaturedProduct(category)
+    assert.equal(product?.category, category)
+    assert.ok(product?.image)
+  }
+})
+
 test("every catalogue record has a safe public image and factual buyer-facing copy", () => {
   for (const product of catalogProducts) {
     assert.match(product.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/)
@@ -38,4 +46,3 @@ test("every catalogue record has a safe public image and factual buyer-facing co
     assert.ok(existsSync(fileURLToPath(imageUrl)), `missing image: ${product.image}`)
   }
 })
-

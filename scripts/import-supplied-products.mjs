@@ -123,8 +123,21 @@ export const catalogProducts: CatalogProduct[] = ${JSON.stringify(records, null,
 export function getCatalogProductsByCategory(category: string) {
   return catalogProducts.filter((product) => product.category === category)
 }
+
+const categoryFeaturedIndexes: Record<string, number> = {
+  "automotive-parts": 0,
+  "carbon-fiber-equipment-parts": 0,
+  "motorcycle-parts": 3,
+  "robot-equipment-parts": 0,
+  "stamping-molds": 0,
+  "steel-structure-mechanical-parts": 10,
+}
+
+export function getCategoryFeaturedProduct(category: string) {
+  const products = getCatalogProductsByCategory(category)
+  return products[categoryFeaturedIndexes[category] ?? 0]
+}
 `
 
 await writeFile(path.join(projectRoot, "lib", "product-catalog.ts"), output, "utf8")
 console.log(`Imported ${records.length} supplied product images.`)
-
