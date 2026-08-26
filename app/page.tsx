@@ -6,11 +6,21 @@ import { Workflow } from "@/components/home/workflow"
 import { RfqCta } from "@/components/rfq-cta"
 import { SectionShell } from "@/components/section-shell"
 import { faqs } from "@/lib/site-data"
+import { CapabilityMatrix } from "@/components/home/capability-matrix"
+import { ApplicationIndustries } from "@/components/home/application-industries"
+import { FeaturedProducts } from "@/components/home/featured-products"
 
 export default function HomePage() {
   return (
     <>
       <Hero />
+      <section className="border-y border-graphite/10 bg-white px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-graphite/10 lg:grid-cols-4">
+          {["Nearly 40 years in manufacturing", "65 supplied product references", "40+ precision machines", "ISO 9001:2015 system"].map((item) => (
+            <p key={item} className="flex min-h-24 items-center px-4 text-sm font-semibold leading-6 text-graphite sm:px-6">{item}</p>
+          ))}
+        </div>
+      </section>
       <SectionShell
         eyebrow="Custom part categories"
         title="Built around industrial parts that need accuracy, flexibility, and manufacturing judgment."
@@ -18,6 +28,16 @@ export default function HomePage() {
       >
         <CategoryShowcase />
       </SectionShell>
+      <section className="bg-graphite px-4 py-20 text-white sm:px-6 lg:px-8 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/55">Machining scope</p>
+          <div className="mt-5 grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
+            <h2 className="text-3xl font-semibold tracking-tight sm:text-5xl">Processes selected around part geometry, material, and order stage.</h2>
+            <p className="max-w-2xl text-base leading-8 text-white/65">From first-piece evaluation to repeat batches, the manufacturing route is reviewed against the drawing and the practical needs of the assembly.</p>
+          </div>
+          <div className="mt-12"><CapabilityMatrix /></div>
+        </div>
+      </section>
       <SectionShell
         className="bg-gradient-to-br from-white via-mist to-white"
         eyebrow="Manufacturing workflow"
@@ -33,6 +53,21 @@ export default function HomePage() {
       </SectionShell>
       <SectionShell className="bg-gradient-to-br from-[#fff7f7] via-white to-mist">
         <QualityPreview />
+      </SectionShell>
+      <SectionShell
+        eyebrow="Application experience"
+        title="Parts for equipment that has to align, move, clamp, support, and repeat."
+        intro="The supplied catalogue spans six application groups, giving overseas buyers a clearer view of the types of custom work MAXTECH supports."
+      >
+        <ApplicationIndustries />
+      </SectionShell>
+      <SectionShell
+        className="bg-gradient-to-br from-white via-mist to-white"
+        eyebrow="Selected manufacturing references"
+        title="Real customer-supplied product imagery, organized for faster sourcing decisions."
+        intro="Browse the full 65-image catalogue by category. Each project is reviewed against its own drawing, material, quantity, and inspection requirements."
+      >
+        <FeaturedProducts />
       </SectionShell>
       <SectionShell
         eyebrow="Buyer questions"
