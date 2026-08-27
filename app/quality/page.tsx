@@ -25,7 +25,7 @@ export default function QualityPage() {
       </section>
       <SectionShell>
         <div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr]">
-          <Image src="/images/certificates/iso-9001.jpg" alt="ISO 9001:2015 certificate" width={620} height={900} className="max-h-[760px] rounded-md object-cover object-top shadow-soft" />
+          <Image src="/images/certificates/iso-9001-enhanced.jpg" alt="ISO 9001:2015 certificate" width={620} height={900} className="max-h-[760px] rounded-md object-cover object-top shadow-soft" />
           <div className="grid content-start gap-4">
             {checks.map((item, index) => (
               <div key={item} className="rounded-md border border-graphite/10 bg-white p-6 shadow-sm">
