@@ -54,7 +54,7 @@ export function mergeProductRowsWithCatalog(rows: DatabaseProductRow[], category
       category,
       name: pickText(row.name_i18n, product.name),
       description: pickText(row.description_i18n, product.description),
-      image: row.image_url || product.image,
+      image: product.image,
       features: pickList(row.features_i18n, []),
       applications: pickList(row.applications_i18n, []),
       specs: row.specs ?? {},

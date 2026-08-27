@@ -6,7 +6,8 @@ const { mergeProductRowsWithCatalog } = await import("../lib/product-catalog-mer
 test("an empty database category falls back to every supplied customer product", () => {
   const products = mergeProductRowsWithCatalog([], "automotive-parts")
   assert.equal(products.length, 12)
-  assert.ok(products.every((product) => product.image.startsWith("/images/products/automotive-parts/")))
+  assert.ok(products.every((product) => product.image.startsWith("/images/products-processed/automotive-parts/")))
+  assert.ok(products.every((product) => product.image.endsWith(".png")))
   assert.ok(products.every((product) => product.name.length > 3))
 })
 
@@ -30,5 +31,5 @@ test("a database product overrides matching copy while retaining its supplied im
   assert.equal(products.length, 12)
   assert.equal(products[0].name, "Brake Disc Machining Reference")
   assert.equal(products[0].description, "Database-authored buyer copy.")
-  assert.match(products[0].image, /brake-disc\.jpg$/)
+  assert.match(products[0].image, /brake-disc\.png$/)
 })
