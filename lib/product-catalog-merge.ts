@@ -62,6 +62,8 @@ export function mergeProductRowsWithCatalog(rows: DatabaseProductRow[], category
   })
 
   for (const row of Array.from(rowsBySlug.values())) {
+    if (row.slug === category) continue
+
     merged.push({
       slug: row.slug,
       category,
