@@ -3,10 +3,12 @@ import { ProductCategoryCard } from "@/components/products/product-category-card
 import { RfqCta } from "@/components/rfq-cta"
 import { SectionShell } from "@/components/section-shell"
 import { getProductCategories } from "@/lib/products-db"
+import { canonicalMetadata } from "@/lib/seo"
 
 export const revalidate = 60
 
 export const metadata: Metadata = {
+  ...canonicalMetadata("/products"),
   title: "Products",
   description: "Explore MAXTECH custom CNC machined parts for robot equipment, carbon fiber equipment, steel structures, molds, automotive, and motorcycle applications."
 }

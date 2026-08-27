@@ -3,10 +3,12 @@ import Image from "next/image"
 import Link from "next/link"
 import { SectionShell } from "@/components/section-shell"
 import { getPublishedArticles } from "@/lib/articles-db"
+import { canonicalMetadata } from "@/lib/seo"
 
 export const revalidate = 60
 
 export const metadata: Metadata = {
+  ...canonicalMetadata("/news"),
   title: "News",
   description: "MAXTECH machining insights, sourcing guidance, and custom CNC manufacturing updates."
 }

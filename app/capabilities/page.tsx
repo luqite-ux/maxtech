@@ -2,8 +2,10 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import { SectionShell } from "@/components/section-shell"
 import { capabilities } from "@/lib/site-data"
+import { canonicalMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
+  ...canonicalMetadata("/capabilities"),
   title: "Capabilities",
   description: "MAXTECH CNC machining capabilities include milling, turning, wire cutting, grinding, drilling, flame cutting, sample machining, and batch production."
 }

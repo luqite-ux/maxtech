@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { CategoryShowcase } from "@/components/home/category-showcase"
 import { EquipmentBand } from "@/components/home/equipment-band"
 import { Hero } from "@/components/home/hero"
@@ -9,6 +10,11 @@ import { faqs } from "@/lib/site-data"
 import { CapabilityMatrix } from "@/components/home/capability-matrix"
 import { ApplicationIndustries } from "@/components/home/application-industries"
 import { FeaturedProducts } from "@/components/home/featured-products"
+import { canonicalMetadata } from "@/lib/seo"
+
+export const metadata: Metadata = {
+  ...canonicalMetadata("/"),
+}
 
 export default function HomePage() {
   return (

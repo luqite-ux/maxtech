@@ -3,6 +3,7 @@ import Image from "next/image"
 import { notFound } from "next/navigation"
 import { SectionShell } from "@/components/section-shell"
 import { getArticleBySlug, getPublishedArticles } from "@/lib/articles-db"
+import { canonicalMetadata } from "@/lib/seo"
 
 type PageProps = {
   params: { slug: string }
@@ -18,6 +19,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const article = await getArticleBySlug(params.slug)
   return {
+    ...canonicalMetadata(`/news/${params.slug}`),
     title: article?.title ?? "News",
     description: article?.excerpt
   }

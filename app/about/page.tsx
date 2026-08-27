@@ -2,8 +2,10 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import { SectionShell } from "@/components/section-shell"
 import { siteInfo } from "@/lib/site-data"
+import { canonicalMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
+  ...canonicalMetadata("/about"),
   title: "About",
   description: "Learn about Hangzhou Hengli Mould Machinery Factory, the manufacturing company behind MAXTECH."
 }

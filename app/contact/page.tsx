@@ -3,8 +3,10 @@ import { MessageCircle, Phone, MapPin } from "lucide-react"
 import { RfqForm } from "@/components/contact/rfq-form"
 import { SectionShell } from "@/components/section-shell"
 import { siteInfo } from "@/lib/site-data"
+import { canonicalMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
+  ...canonicalMetadata("/contact"),
   title: "Contact & RFQ",
   description: "Contact MAXTECH and send an RFQ for custom CNC machining and precision mechanical parts."
 }

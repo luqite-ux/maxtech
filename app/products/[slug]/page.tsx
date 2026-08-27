@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { CategoryDetail } from "@/components/products/category-detail"
 import { productCategories } from "@/lib/site-data"
+import { canonicalMetadata } from "@/lib/seo"
 
 type PageProps = {
   params: { slug: string }
@@ -13,6 +14,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: PageProps): Metadata {
   const category = productCategories.find((item) => item.slug === params.slug)
   return {
+    ...canonicalMetadata(`/products/${params.slug}`),
     title: category ? category.name.en : "Product Category",
     description: category?.summary
   }

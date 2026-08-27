@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import { SectionShell } from "@/components/section-shell"
+import { canonicalMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
+  ...canonicalMetadata("/quality"),
   title: "Quality",
   description: "MAXTECH follows ISO 9001:2015 quality management and inspection workflows for custom machined parts."
 }

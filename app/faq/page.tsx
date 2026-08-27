@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
 import { SectionShell } from "@/components/section-shell"
 import { faqs } from "@/lib/site-data"
+import { canonicalMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
+  ...canonicalMetadata("/faq"),
   title: "FAQ",
   description: "Frequently asked questions about MAXTECH custom CNC machining, samples, MOQ, technical documents, and production updates."
 }
