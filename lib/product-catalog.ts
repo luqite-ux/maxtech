@@ -7,7 +7,7 @@ export type CatalogProduct = {
   sourceFilename: string
 }
 
-export const catalogProducts: CatalogProduct[] = [
+const sourceCatalogProducts: CatalogProduct[] = [
   {
     "slug": "automotive-parts-01",
     "category": "automotive-parts",
@@ -529,6 +529,13 @@ export const catalogProducts: CatalogProduct[] = [
     "sourceFilename": "驱动杆Drive Connecting Rod  (2).png"
   }
 ]
+
+export const catalogProducts: CatalogProduct[] = sourceCatalogProducts.map((product) => ({
+  ...product,
+  image: product.image
+    .replace("/images/products/", "/images/products-processed/")
+    .replace(/\.(?:jpe?g|png)$/i, ".png"),
+}))
 
 export function getCatalogProductsByCategory(category: string) {
   return catalogProducts.filter((product) => product.category === category)

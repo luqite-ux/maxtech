@@ -40,7 +40,8 @@ test("every catalogue record has a safe public image and factual buyer-facing co
     assert.ok(product.name.trim().length > 3)
     assert.ok(product.description.trim().length > 10)
     assert.ok(!prohibited.test(JSON.stringify(product)))
-    assert.ok(product.image.startsWith(`/images/products/${product.category}/`))
+    assert.ok(product.image.startsWith(`/images/products-processed/${product.category}/`))
+    assert.ok(product.image.endsWith(".png"))
 
     const imageUrl = new URL(`../public${product.image}`, import.meta.url)
     assert.ok(existsSync(fileURLToPath(imageUrl)), `missing image: ${product.image}`)
