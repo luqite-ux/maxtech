@@ -4,6 +4,7 @@ export const siteInfo = {
   address: "No. 688 Yanan Road, Yaqian Town, Xiaoshan District, Hangzhou City, Zhejiang Province, China",
   phone: "+86-15267035569",
   whatsapp: "+86-15267035569",
+  email: "info@hl-precision.com",
   tagline: {
     en: "Precision CNC machining and custom mechanical parts for demanding industrial projects."
   },
